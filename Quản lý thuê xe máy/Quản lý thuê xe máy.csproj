@@ -46,80 +46,83 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaoTriXe.cs">
+    <Compile Include="GUI\BaoTriXe.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BaoTriXe.Designer.cs">
+    <Compile Include="GUI\BaoTriXe.Designer.cs">
       <DependentUpon>BaoTriXe.cs</DependentUpon>
     </Compile>
     <Compile Include="DataStore.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Entity\User.cs" />
+    <Compile Include="DAL\Interface\IUserDAL.cs" />
+    <Compile Include="DAL\UserDAL.cs" />
+    <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="GUI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="HoaDon.cs">
+    <Compile Include="GUI\HoaDon.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HoaDon.Designer.cs">
+    <Compile Include="GUI\HoaDon.Designer.cs">
       <DependentUpon>HoaDon.cs</DependentUpon>
     </Compile>
-    <Compile Include="Login.cs">
+    <Compile Include="GUI\Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Login.Designer.cs">
+    <Compile Include="GUI\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuanLyKH.cs">
+    <Compile Include="GUI\QuanLyKH.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="QuanLyKH.Designer.cs">
+    <Compile Include="GUI\QuanLyKH.Designer.cs">
       <DependentUpon>QuanLyKH.cs</DependentUpon>
     </Compile>
-    <Compile Include="QuanLyXe.cs">
+    <Compile Include="GUI\QuanLyXe.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="QuanLyXe.Designer.cs">
+    <Compile Include="GUI\QuanLyXe.Designer.cs">
       <DependentUpon>QuanLyXe.cs</DependentUpon>
     </Compile>
-    <Compile Include="TaiKhoan.cs">
+    <Compile Include="GUI\TaiKhoan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TaiKhoan.Designer.cs">
+    <Compile Include="GUI\TaiKhoan.Designer.cs">
       <DependentUpon>TaiKhoan.cs</DependentUpon>
     </Compile>
-    <Compile Include="TaiKhoanDangNhap.cs" />
-    <Compile Include="ThongKe.cs">
+    <Compile Include="GUI\TaiKhoanDangNhap.cs" />
+    <Compile Include="GUI\ThongKe.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ThongKe.Designer.cs">
+    <Compile Include="GUI\ThongKe.Designer.cs">
       <DependentUpon>ThongKe.cs</DependentUpon>
     </Compile>
-    <Compile Include="Thuexe.cs">
+    <Compile Include="GUI\Thuexe.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Thuexe.Designer.cs">
+    <Compile Include="GUI\Thuexe.Designer.cs">
       <DependentUpon>Thuexe.cs</DependentUpon>
     </Compile>
-    <Compile Include="ucDashboard.cs">
+    <Compile Include="GUI\Control\ucDashboard.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucDashboard.Designer.cs">
+    <Compile Include="GUI\Control\ucDashboard.Designer.cs">
       <DependentUpon>ucDashboard.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="BaoTriXe.resx">
+    <EmbeddedResource Include="GUI\BaoTriXe.resx">
       <DependentUpon>BaoTriXe.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="GUI\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HoaDon.resx">
+    <EmbeddedResource Include="GUI\HoaDon.resx">
       <DependentUpon>HoaDon.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Login.resx">
+    <EmbeddedResource Include="GUI\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -132,22 +135,22 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="QuanLyKH.resx">
+    <EmbeddedResource Include="GUI\QuanLyKH.resx">
       <DependentUpon>QuanLyKH.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="QuanLyXe.resx">
+    <EmbeddedResource Include="GUI\QuanLyXe.resx">
       <DependentUpon>QuanLyXe.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TaiKhoan.resx">
+    <EmbeddedResource Include="GUI\TaiKhoan.resx">
       <DependentUpon>TaiKhoan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ThongKe.resx">
+    <EmbeddedResource Include="GUI\ThongKe.resx">
       <DependentUpon>ThongKe.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Thuexe.resx">
+    <EmbeddedResource Include="GUI\Thuexe.resx">
       <DependentUpon>Thuexe.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucDashboard.resx">
+    <EmbeddedResource Include="GUI\Control\ucDashboard.resx">
       <DependentUpon>ucDashboard.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
