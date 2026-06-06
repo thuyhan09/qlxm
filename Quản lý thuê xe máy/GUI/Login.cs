@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Collections.Specialized.BitVector32;
+using Quản_lý_thuê_xe_máy.DAL;
+using Quản_lý_thuê_xe_máy.DAL.Interfaces;
 
 namespace Quản_lý_thuê_xe_máy
 {
@@ -16,7 +10,6 @@ namespace Quản_lý_thuê_xe_máy
         public Login()
         {
             InitializeComponent();
-
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
@@ -26,24 +19,25 @@ namespace Quản_lý_thuê_xe_máy
 
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
-            string tk = txtTaiKhoan.Text;
-            string mk = txtMatKhau.Text;
+            IUserDAL userDAL = new UserDAL();
 
-            var user = AppData.Users.FirstOrDefault(x =>
-                x.Username == tk &&
-                x.Password == mk);
+            var user = userDAL.Login(
+                txtTaiKhoan.Text,
+                txtMatKhau.Text
+            );
 
-            if (tk == TaiKhoanDangNhap.TenDangNhap
-    && mk == TaiKhoanDangNhap.MatKhau)
+            if (user != null)
             {
                 MessageBox.Show("Đăng nhập thành công");
 
+                Session.CurrentUser = user.Username;
+                Session.CurrentRole = user.Role;
+
                 frmChinh f = new frmChinh();
-                this.Hide();      // Ẩn Login
 
-                f.ShowDialog();   // Chờ frmChinh đóng
-
-                this.Show();      // Hiện lại Login sau khi đăng xuất
+                this.Hide();
+                f.ShowDialog();
+                this.Show();
             }
             else
             {
@@ -58,9 +52,9 @@ namespace Quản_lý_thuê_xe_máy
 
         private void chkHienMatKhau_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkHienMatKhau.Checked) 
+            if (chkHienMatKhau.Checked)
                 txtMatKhau.PasswordChar = '\0';
-            else 
+            else
                 txtMatKhau.PasswordChar = '*';
         }
 
