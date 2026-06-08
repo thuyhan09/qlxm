@@ -7,6 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Linq;
+using Quản_lý_thuê_xe_máy.DAL;
+using Quản_lý_thuê_xe_máy.DAL.Interfaces;
+using Quản_lý_thuê_xe_máy.Entity;
 
 namespace Quản_lý_thuê_xe_máy
 {
@@ -29,56 +33,38 @@ namespace Quản_lý_thuê_xe_máy
 
         private void HoaDon_Load(object sender, EventArgs e)
         {
-            cboXeMay.Items.Add("Honda Vision");
-            cboXeMay.Items.Add("Honda Wave Alpha");
-            cboXeMay.Items.Add("Honda Air Blade");
-            cboXeMay.Items.Add("Yamaha Sirius");
-            cboXeMay.Items.Add("Yamaha Exciter");
+            IXeDAL xeDAL = new XeDAL();
 
-            cboXeMay.SelectedIndex = 0;
+            cboXeMay.Items.Clear();
 
+            foreach (Xe xe in xeDAL.GetAll())
+            {
+                cboXeMay.Items.Add(xe.TenXe);
+            }
+
+            if (cboXeMay.Items.Count > 0)
+            {
+                cboXeMay.SelectedIndex = 0;
+            }
         }
 
         private void cboXeMay_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cboBienSo.Items.Clear();
+            IXeDAL xeDAL = new XeDAL();
 
-            switch (cboXeMay.Text)
+            Xe xe = xeDAL.GetAll()
+                        .FirstOrDefault(x => x.TenXe == cboXeMay.Text);
+
+            if (xe != null)
             {
-                case "Honda Vision":
-                    cboBienSo.Items.Add("75A-12345");
-                    cboBienSo.Items.Add("75A-12346");
-                    cboBienSo.Items.Add("75A-12347");
-                    txtGiaThue.Text = "150000";
-                    break;
+                cboBienSo.Items.Clear();
 
-                case "Honda Wave Alpha":
-                    cboBienSo.Items.Add("75A-56789");
-                    cboBienSo.Items.Add("75A-56790");
-                    txtGiaThue.Text = "120000";
-                    break;
+                cboBienSo.Items.Add(xe.BienSo);
 
-                case "Honda Air Blade":
-                    cboBienSo.Items.Add("75A-88888");
-                    cboBienSo.Items.Add("75A-88889");
-                    txtGiaThue.Text = "180000";
-                    break;
-
-                case "Yamaha Sirius":
-                    cboBienSo.Items.Add("75A-22222");
-                    cboBienSo.Items.Add("75A-22223");
-                    txtGiaThue.Text = "120000";
-                    break;
-
-                case "Yamaha Exciter":
-                    cboBienSo.Items.Add("75A-99999");
-                    cboBienSo.Items.Add("75A-99998");
-                    txtGiaThue.Text = "250000";
-                    break;
-            }
-
-            if (cboBienSo.Items.Count > 0)
                 cboBienSo.SelectedIndex = 0;
+
+                txtGiaThue.Text = xe.GiaThue.ToString();
+            }
         }
 
         private void nudSoNgay_SelectedItemChanged(object sender, EventArgs e)

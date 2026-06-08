@@ -1,5 +1,6 @@
 ﻿using Quản_lý_thuê_xe_máy.Entity;
 using System.Collections.Generic;
+
 namespace Quản_lý_thuê_xe_máy.DAL.Interfaces
 {
     public interface IUserDAL
@@ -7,5 +8,9 @@ namespace Quản_lý_thuê_xe_máy.DAL.Interfaces
         User Login(string username, string password);
 
         List<User> GetAll();
+
+        User GetByUsername(string username);
+
+        void Update(User user);
     }
 }

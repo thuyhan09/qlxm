@@ -54,8 +54,23 @@
     </Compile>
     <Compile Include="DataStore.cs" />
     <Compile Include="Entity\User.cs" />
+    <Compile Include="Entity\Xe.cs" />
+    <Compile Include="Entity\KhachHang.cs" />
+    <Compile Include="Entity\HoaDonEntity.cs" />
+    <Compile Include="Entity\BaoTri.cs" />
+    <Compile Include="Entity\ThueXe.cs" />
     <Compile Include="DAL\Interface\IUserDAL.cs" />
+    <Compile Include="DAL\Interface\IXeDAL.cs" />
+    <Compile Include="DAL\Interface\IKhachHangDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
+    <Compile Include="DAL\XeDAL.cs" />
+    <Compile Include="DAL\KhachHangDAL.cs" />
+    <Compile Include="DAL\Interface\IHoaDonDAL.cs" />
+    <Compile Include="DAL\HoaDonDAL.cs" />
+    <Compile Include="DAL\Interface\IBaoTriDAL.cs" />
+    <Compile Include="DAL\BaoTriDAL.cs" />
+    <Compile Include="DAL\Interface\IThueXeDAL.cs" />
+    <Compile Include="DAL\ThueXeDAL.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>

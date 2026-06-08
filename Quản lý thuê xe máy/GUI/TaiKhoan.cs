@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Quản_lý_thuê_xe_máy.DAL;
+using Quản_lý_thuê_xe_máy.DAL.Interfaces;
+using Quản_lý_thuê_xe_máy.Entity;
 
 namespace Quản_lý_thuê_xe_máy
 {
     public partial class TaiKhoan : Form
     {
+        private readonly IUserDAL userDAL = new UserDAL();
+
         public TaiKhoan()
         {
             InitializeComponent();
@@ -40,7 +38,6 @@ namespace Quản_lý_thuê_xe_máy
             txtMatKhauCu.PasswordChar = hien ? '\0' : '*';
             txtMatKhauMoi.PasswordChar = hien ? '\0' : '*';
             txtNhapLaiMK.PasswordChar = hien ? '\0' : '*';
-
         }
 
         private void pnlTaiKhoan_Paint(object sender, PaintEventArgs e)
@@ -55,9 +52,7 @@ namespace Quản_lý_thuê_xe_máy
 
         private void btnDangXuat_Click(object sender, EventArgs e)
         {
-            
             frmChinh frm = (frmChinh)this.ParentForm;
-
             frm.Close();
         }
 
@@ -77,33 +72,44 @@ namespace Quản_lý_thuê_xe_máy
 
         private void TaiKhoan_Load(object sender, EventArgs e)
         {
+            cboVaiTro.Items.Clear();
+
             cboVaiTro.Items.Add("Admin");
             cboVaiTro.Items.Add("Nhân viên");
-            
 
             cboVaiTro.SelectedIndex = 0;
-            string vaiTro = cboVaiTro.SelectedItem.ToString();
+
+            if (!string.IsNullOrEmpty(Session.CurrentUser))
+            {
+                User user =
+                    userDAL.GetByUsername(Session.CurrentUser);
+
+                if (user != null)
+                {
+                    txtTenDangNhap.Text = user.Username;
+                    cboVaiTro.Text = user.Role;
+                }
+            }
         }
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
             string username = txtTenDangNhap.Text;
-            string roleMoi = cboVaiTro.SelectedItem.ToString();
 
-            var user = AppData.Users.FirstOrDefault(x => x.Username == username);
+            User user =
+                userDAL.GetByUsername(username);
 
-            if (user != null)
-            {
-                user.Role = roleMoi;
-
-                MessageBox.Show("Cập nhật thành công!");
-            }
-
-            else
+            if (user == null)
             {
                 MessageBox.Show("Không tìm thấy user!");
+                return;
             }
-            
+
+            user.Role = cboVaiTro.Text;
+
+            userDAL.Update(user);
+
+            MessageBox.Show("Cập nhật thành công!");
         }
 
         private void btnDoiMatKhau_Click(object sender, EventArgs e)
@@ -112,7 +118,16 @@ namespace Quản_lý_thuê_xe_máy
             string mkMoi = txtMatKhauMoi.Text;
             string xacNhan = txtNhapLaiMK.Text;
 
-            if (mkCu != TaiKhoanDangNhap.MatKhau)
+            User user =
+                userDAL.GetByUsername(Session.CurrentUser);
+
+            if (user == null)
+            {
+                MessageBox.Show("Không tìm thấy tài khoản!");
+                return;
+            }
+
+            if (mkCu != user.Password)
             {
                 MessageBox.Show("Mật khẩu cũ không đúng!");
                 return;
@@ -124,7 +139,9 @@ namespace Quản_lý_thuê_xe_máy
                 return;
             }
 
-            TaiKhoanDangNhap.MatKhau = mkMoi;
+            user.Password = mkMoi;
+
+            userDAL.Update(user);
 
             MessageBox.Show("Đổi mật khẩu thành công!");
         }

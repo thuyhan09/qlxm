@@ -36,7 +36,16 @@ namespace Quản_lý_thuê_xe_máy
                 frmChinh f = new frmChinh();
 
                 this.Hide();
+
                 f.ShowDialog();
+
+                Session.CurrentUser = null;
+                Session.CurrentRole = null;
+
+                txtTaiKhoan.Clear();
+                txtMatKhau.Clear();
+                txtTaiKhoan.Focus();
+
                 this.Show();
             }
             else

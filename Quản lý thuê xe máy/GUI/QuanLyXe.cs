@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Quản_lý_thuê_xe_máy.DAL;
+using Quản_lý_thuê_xe_máy.DAL.Interfaces;
+using Quản_lý_thuê_xe_máy.Entity;
 
 namespace Quản_lý_thuê_xe_máy
 {
@@ -31,24 +28,26 @@ namespace Quản_lý_thuê_xe_máy
         {
 
         }
-        
 
         private void Form1_Load(object sender, EventArgs e)
         {
             dgvXe.DefaultCellStyle.SelectionBackColor = Color.Bisque;
             dgvXe.DefaultCellStyle.SelectionForeColor = Color.Black;
 
-            dgvXe.Rows.Add("XM001", "Honda Vision", "43D1-123.45", "120,000 đ", "Sẵn sàng");
-            dgvXe.Rows.Add("XM002", "Honda Air Blade", "43H1-567.89", "180,000 đ", "Đang thuê");
-            dgvXe.Rows.Add("XM003", "Yamaha Exciter 155", "43E1-999.99", "250,000 đ", "Bảo trì");
-            dgvXe.Rows.Add("XM004", "Honda SH Mode", "43M1-456.78", "300,000 đ", "Sẵn sàng");
-            dgvXe.Rows.Add("XM005", "Yamaha Janus", "43J1-888.88", "150,000 đ", "Đang thuê");
-            dgvXe.Rows.Add("XM006", "Honda Winner X", "43W1-222.22", "220,000 đ", "Sẵn sàng");
-            dgvXe.Rows.Add("XM007", "Yamaha Grande", "43G1-333.33", "170,000 đ", "Sẵn sàng");
-            dgvXe.Rows.Add("XM008", "Honda SH 160i", "43S1-444.44", "350,000 đ", "Đang thuê");
-            dgvXe.Rows.Add("XM009", "Suzuki Raider", "43R1-555.55", "230,000 đ", "Bảo trì");
-            dgvXe.Rows.Add("XM010", "VinFast Evo200", "43V1-666.66", "200,000 đ", "Sẵn sàng");
-            
+            dgvXe.Rows.Clear();
+
+            IXeDAL xeDAL = new XeDAL();
+
+            foreach (Xe xe in xeDAL.GetAll())
+            {
+                dgvXe.Rows.Add(
+                    xe.MaXe,
+                    xe.TenXe,
+                    xe.LoaiXe,
+                    xe.GiaThue.ToString("N0"),
+                    xe.TrangThai
+                );
+            }
 
             dgvXe.Columns[4].DefaultCellStyle.Font =
                 new Font("Segoe UI", 9, FontStyle.Bold);
@@ -60,26 +59,25 @@ namespace Quản_lý_thuê_xe_máy
             {
                 DataGridViewRow row = dgvXe.Rows[e.RowIndex];
 
-                txtMaXe.Text = row.Cells[0].Value.ToString();
-                txtTenXe.Text = row.Cells[1].Value.ToString();
-                txtBienSo.Text = row.Cells[2].Value.ToString();
-                txtGiaThue.Text = row.Cells[3].Value.ToString();
-                cboTrangThai.Text = row.Cells[4].Value.ToString();
+                txtMaXe.Text = row.Cells[0].Value?.ToString();
+                txtTenXe.Text = row.Cells[1].Value?.ToString();
+                txtBienSo.Text = row.Cells[2].Value?.ToString();
+                txtGiaThue.Text = row.Cells[3].Value?.ToString();
+                cboTrangThai.Text = row.Cells[4].Value?.ToString();
             }
         }
 
         private void btnThem_Click(object sender, EventArgs e)
         {
             dgvXe.Rows.Add(
-        txtMaXe.Text,
-        txtTenXe.Text,
-        txtBienSo.Text,
-        txtGiaThue.Text,
-        cboTrangThai.Text
-    );
+                txtMaXe.Text,
+                txtTenXe.Text,
+                txtBienSo.Text,
+                txtGiaThue.Text,
+                cboTrangThai.Text
+            );
 
             MessageBox.Show("Thêm xe thành công!");
-           
         }
 
         private void btnSua_Click(object sender, EventArgs e)
@@ -93,7 +91,6 @@ namespace Quản_lý_thuê_xe_máy
                 dgvXe.CurrentRow.Cells[4].Value = cboTrangThai.Text;
 
                 MessageBox.Show("Cập nhật thành công!");
-              
             }
         }
 
@@ -114,9 +111,9 @@ namespace Quản_lý_thuê_xe_máy
             {
                 if (row.IsNewRow) continue;
 
-                string maXe = row.Cells[0].Value.ToString().ToLower();
-                string tenXe = row.Cells[1].Value.ToString().ToLower();
-                string bienSo = row.Cells[2].Value.ToString().ToLower();
+                string maXe = row.Cells[0].Value?.ToString().ToLower() ?? "";
+                string tenXe = row.Cells[1].Value?.ToString().ToLower() ?? "";
+                string bienSo = row.Cells[2].Value?.ToString().ToLower() ?? "";
 
                 row.Visible =
                     maXe.Contains(tuKhoa) ||
