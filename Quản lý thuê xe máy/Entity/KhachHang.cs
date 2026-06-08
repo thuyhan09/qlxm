@@ -1,5 +1,10 @@
-public class KhachHang
+namespace Quản_lý_thuê_xe_máy.Entity
 {
-    public string MaKH { get; set; }
-    public string HoTen { get; set; }
+    public class KhachHang
+    {
+        public string MaKH { get; set; }
+        public string HoTen { get; set; }
+        public string SDT { get; set; }
+        public string CCCD { get; set; }
+    }
 }

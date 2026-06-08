@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Quản_lý_thuê_xe_máy.DAL;
+using Quản_lý_thuê_xe_máy.DAL.Interfaces;
+using Quản_lý_thuê_xe_máy.Entity;
 
 namespace Dangnhap
 {
@@ -35,9 +38,26 @@ namespace Dangnhap
 
         private void Thuexe_Load(object sender, EventArgs e)
         {
+            IKhachHangDAL khDAL = new KhachHangDAL();
 
+            cmbKhachHang.Items.Clear();
+
+            foreach (KhachHang kh in khDAL.GetAll())
+            {
+                cmbKhachHang.Items.Add(
+                    kh.MaKH + " - " + kh.HoTen
+                );
+            }
+
+            IXeDAL xeDAL = new XeDAL();
+
+            cmbXeMay.Items.Clear();
+
+            foreach (Xe xe in xeDAL.GetAll())
+            {
+                cmbXeMay.Items.Add(xe.TenXe);
+            }
         }
-
         private void txtTongTien_TextChanged(object sender, EventArgs e)
         {
 
@@ -48,11 +68,24 @@ namespace Dangnhap
 
         }
 
-        private void cmbXeMay_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbXeMay_SelectedIndexChanged(
+        object sender,
+        EventArgs e)
         {
+            IXeDAL xeDAL = new XeDAL();
 
+            Xe xe = xeDAL.GetAll()
+                        .FirstOrDefault(
+                            x => x.TenXe == cmbXeMay.Text);
+
+            if (xe != null)
+            {
+                txtBienSo.Text = xe.MaXe;
+
+                txtGiaThue.Text =
+                    xe.GiaThue.ToString("N0");
+            }
         }
-
         private void btnLuu_Click(object sender, EventArgs e)
         {
             MessageBox.Show(

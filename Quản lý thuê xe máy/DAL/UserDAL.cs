@@ -18,5 +18,25 @@ namespace Quản_lý_thuê_xe_máy.DAL
         {
             return AppData.Users;
         }
+
+        public User GetByUsername(string username)
+        {
+            return AppData.Users
+                          .FirstOrDefault(x =>
+                              x.Username == username);
+        }
+
+        public void Update(User user)
+        {
+            User oldUser =
+                AppData.Users.FirstOrDefault(x =>
+                    x.Username == user.Username);
+
+            if (oldUser != null)
+            {
+                oldUser.Password = user.Password;
+                oldUser.Role = user.Role;
+            }
+        }
     }
 }

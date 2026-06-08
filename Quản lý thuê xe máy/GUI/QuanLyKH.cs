@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Quản_lý_thuê_xe_máy.DAL;
+using Quản_lý_thuê_xe_máy.DAL.Interfaces;
+using Quản_lý_thuê_xe_máy.Entity;
 namespace Quản_lý_thuê_xe_máy
 {
     public partial class QuanLyKH : Form
@@ -117,34 +119,24 @@ namespace Quản_lý_thuê_xe_máy
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            dgvKhachHang.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvKhachHang.SelectionMode =
+                DataGridViewSelectionMode.FullRowSelect;
 
-            dgvKhachHang.Rows.Add(
-                "KH001",
-                "Nguyễn Văn A",
-                "0901112222",
-                "123 Đường Lê Duẩn, Quận 1",
-                "Vàng",
-                "Đã liên hệ"
-            );
+            dgvKhachHang.Rows.Clear();
 
-            dgvKhachHang.Rows.Add(
-                "KH002",
-                "Trần Thị B",
-                "0987776655",
-                "456 Nguyễn Chí Thanh, Đà Nẵng",
-                "Bạc",
-                "Chưa liên hệ"
-            );
+            IKhachHangDAL khDAL = new KhachHangDAL();
 
-            dgvKhachHang.Rows.Add(
-                "KH003",
-                "Lê Thanh Phương",
-                "0912345678",
-                "789 Cách Mạng Tháng 8, TP.HCM",
-                "Đồng",
-                "Đã liên hệ"
-            );
+            foreach (KhachHang kh in khDAL.GetAll())
+            {
+                dgvKhachHang.Rows.Add(
+                    kh.MaKH,
+                    kh.HoTen,
+                    kh.SDT,
+                    kh.CCCD,
+                    "Thường",
+                    "Đã liên hệ"
+                );
+            }
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

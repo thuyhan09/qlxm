@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Quản_lý_thuê_xe_máy.DAL;
+using Quản_lý_thuê_xe_máy.DAL.Interfaces;
+using Quản_lý_thuê_xe_máy.Entity;
 
 namespace Quản_lý_thuê_xe_máy
 {
@@ -31,11 +34,22 @@ namespace Quản_lý_thuê_xe_máy
             dgvBaoTri.DefaultCellStyle.SelectionBackColor = Color.Bisque;
             dgvBaoTri.DefaultCellStyle.SelectionForeColor = Color.Black;
 
-            dgvBaoTri.Rows.Add("BT001", "XM011", "Định kỳ", "01/06/2026", "Thay nhớt, kiểm tra phanh", "500,000 đ", "Honda");
-            dgvBaoTri.Rows.Add("BT002", "XM010", "Sửa chữa lớn", "15/05/2026", "Thay lốp", "1,200,000 đ", "Yamaha");
-            dgvBaoTri.Rows.Add("BT003", "XM008", "Định kỳ", "05/06/2026", "Bảo dưỡng động cơ", "500,000 đ", "Honda");
+            dgvBaoTri.Rows.Clear();
 
+            IBaoTriDAL baoTriDAL = new BaoTriDAL();
 
+            foreach (BaoTri bt in baoTriDAL.GetAll())
+            {
+                dgvBaoTri.Rows.Add(
+                    bt.MaBaoTri,
+                    bt.MaXe,
+                    bt.LoaiBaoTri,
+                    bt.NgayBaoTri.ToString("dd/MM/yyyy"),
+                    bt.NoiDung,
+                    bt.ChiPhi.ToString("N0"),
+                    bt.NhaCungCap
+                );
+            }
         }
         private void dgvBaoTri_CellClick(object sender, DataGridViewCellEventArgs e)
         {
